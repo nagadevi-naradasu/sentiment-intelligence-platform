@@ -1,0 +1,38 @@
+project_name: Sentiment Intelligence Platform
+
+description: >
+  A real-time sentiment analysis system built using FastAPI, React,
+  Redis Streams, PostgreSQL, and Docker Compose. The platform ingests
+  social media posts, performs sentiment and emotion analysis, and
+  streams live analytics to a dashboard using WebSockets.
+
+services:
+  - backend
+  - frontend
+  - worker
+  - ingester
+  - redis
+  - postgres
+
+setup:
+  command: docker-compose up -d
+  expected_result: All services start and remain healthy
+
+health_checks:
+  backend:
+    url: http://localhost:8000/api/health
+    expected_status: 200
+  frontend:
+    url: http://localhost:3000
+    expected_status: 200
+
+tests:
+  run:
+    - docker-compose exec backend pytest -v
+    - docker-compose exec backend pytest --cov=. --cov-report=term
+  coverage_requirement: ">= 70%"
+
+notes:
+  - No hardcoded credentials are included
+  - Environment variables are documented in .env.example
+  - System is fully containerized and reproducible

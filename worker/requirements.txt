@@ -1,0 +1,7 @@
+redis>=5.0.0
+sqlalchemy>=2.0
+asyncpg
+transformers
+torch
+python-dotenv
+httpx
